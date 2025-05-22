@@ -36,6 +36,16 @@ public class CursosController {
         return ResponseEntity.notFound().build();
     }
 
+    @PutMapping("/actualizar/{idCurso}")
+    public ResponseEntity<String> actualizarCurso(@PathVariable Integer idCurso, @RequestBody Curso cursoActualizado) {
+        boolean actualizado = cursoService.actualizarCurso(idCurso, cursoActualizado);
+        if (actualizado) {
+            return ResponseEntity.ok("Curso actualizado correctamente");
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
     @DeleteMapping("/borrar/{idCurso}")
     public ResponseEntity<String> borrarCurso(@PathVariable Integer idCurso) {
         boolean borrado = cursoService.borrarCurso(idCurso);
