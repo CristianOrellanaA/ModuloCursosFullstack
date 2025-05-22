@@ -2,6 +2,7 @@ package edutechcursos.main.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -92,6 +93,20 @@ public List<Curso> obtenerCursos() {
     }
 }
 
+    public boolean actualizarCurso(Integer idCurso, Curso cursoActualizado) {
+    Optional<CursoEntity> cursoExistente = cursoRepository.findById(idCurso);
+    if (cursoExistente.isPresent()) {
+        CursoEntity curso = cursoExistente.get();
+        curso.setNombreCurso(cursoActualizado.getNombreCurso());
+        curso.setCodigoCurso(cursoActualizado.getCodigoCurso());
+        curso.setDescCurso(cursoActualizado.getDescCurso());
+        curso.setInstructorCurso(cursoActualizado.getInstructorCurso());
+        curso.setDisponibilidadCurso(cursoActualizado.getDisponibilidadCurso());
+        cursoRepository.save(curso);
+        return true;
+    }
+    return false;
+}
 
 public CursoDto obtenerCursoDto(Integer idCurso){
     try{
